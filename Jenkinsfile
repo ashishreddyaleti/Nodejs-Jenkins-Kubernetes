@@ -2,7 +2,7 @@ pipeline{
     agent any
     environment {
         dockerImagename = "reddyashishaleti/myimage"
-        dockerImage = ""
+        appimage = ""
     }
     stages{
         stage('Build Image'){
@@ -34,7 +34,7 @@ pipeline{
                     script {
                     sh 'docker version'
                     sh 'docker image list'
-                    sh 'docker rmi dockerImage'
+                    sh 'helm --help'
                 }
 
             }

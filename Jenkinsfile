@@ -13,6 +13,22 @@ pipeline{
                 
             }
         }
+        stage ('PUSH IMAGE'){
+            environment {
+                dockerCredentilals = 'dockerCred'
+            }
+            steps{
+                script {
+                    def myimage = docker.build dockerImagename + "$BUILD_NUMBER"
+                    docker.withRegistry('https://registry.hub.docker.com', 'Dockerhub') {
+                        appimage.push()
+                        appimage.push('latest')
+                        
+                    }
+                }
+
+            }
+        }
     }
 
 

@@ -13,7 +13,7 @@ pipeline{
                 
             }
         }
-        stage ('PUSH IMAGE'){
+        stage('PUSH IMAGE'){
             environment {
                 dockerCredentilals = 'dockerCred'
             }

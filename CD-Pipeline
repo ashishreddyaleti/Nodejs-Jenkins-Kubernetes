@@ -1,0 +1,32 @@
+pipeline{
+
+    agent any
+
+    stages {
+        stage('checkout scm'){
+            
+           steps {
+
+             git credentialsId: 'github', url: 'https://github.com/ashishreddyaleti/Devops-React-Nodejs-Jenkins-Docker-kubernetes.git'
+             }
+        }
+        stage('Deploy to minikube') {
+            steps {
+
+               sh 'cat deployment.yaml'
+               sh 'deploymentservice.yaml'
+            }
+
+        }
+
+
+
+
+
+
+    }
+
+
+
+
+}

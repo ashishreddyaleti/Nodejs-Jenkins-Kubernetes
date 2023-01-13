@@ -34,7 +34,7 @@ pipeline{
                     script {
                     sh 'docker version'
                     sh 'docker image list'
-                    sh 'helm --help'
+                    sh 'kubectl --help'
                 }
 
             }

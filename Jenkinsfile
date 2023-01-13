@@ -33,7 +33,7 @@ pipeline{
                 steps {
                     script {
                     sh 'docker version'
-                    sh 'docker rmi dockerImage'
+                    sh 'docker image list'
                 }
 
             }

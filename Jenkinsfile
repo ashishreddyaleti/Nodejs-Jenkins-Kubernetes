@@ -28,6 +28,8 @@ pipeline{
                 }
 
             }
+            stage('Remove Docker Image')
+
         }
     }
 

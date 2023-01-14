@@ -1,14 +1,14 @@
 pipeline{
     agent any
-    environment {
-        dockerImagename = "reddyashishaleti/myimage"
-        appimage = ""
-    }
+    // environment {
+    //     dockerImagename = "reddyashishaleti/myimage"
+    //     appimage = ""
+    // }
     stages{
         stage('Docker Build'){
             steps{
                
-                sh "docker build -t dockerImagename:${env.BUILD_NUMBER} ."
+                sh "docker build -t reddyashishaleti/ashish:${env.BUILD_NUMBER} ."
             }
         }
         stage('Docker Push'){

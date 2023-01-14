@@ -5,30 +5,27 @@ pipeline{
         appimage = ""
     }
     stages{
-        stage('Build Image'){
+        stage('Docker Build'){
             steps{
-                script {
-                    dockerImage = docker.build dockerImagename
-                }
-                
+               
+                sh "docker build -t dockerImagename:${env.BUILD_NUMBER} ."
             }
         }
-        stage('PUSH IMAGE'){
-            environment {
-                dockerCredentilals = 'dockerCred'
-            }
+        stage('Docker Push'){
+            
+            
             steps{
                 script {
-                    def appimage = docker.build dockerImagename + "$BUILD_NUMBER"
-                    docker.withRegistry('https://registry.hub.docker.com', 'Dockerhub') {
-                        appimage.push()
-                        appimage.push('latest')
+                   withCredentials([usernamePassword(credentialsId: 'Dockerhub', passwordVariable: 'passwordVariable', usernameVariable: 'usernameVariable')]){
+                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+                    sh "docker push dockerImagename:${env.BUILD_NUMBER}"
+                   }
                         
                     }
                 }
 
             }
-        }
+        
             stage('Remove Docker Image'){
                 steps {
                     script {
@@ -41,6 +38,4 @@ pipeline{
 
         }
     }
-
-
 }

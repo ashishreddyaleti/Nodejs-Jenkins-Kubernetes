@@ -40,7 +40,7 @@ pipeline{
         stage('Deploy to minikube') {
 
             steps{
-                sh 'kubectl get pods -A'
+                sh 'ip a'
                 // withKubeConfig([credentialsId: 'kubernetes']){
                 //     sh 'cat deployment.yml | sed "s/{{BUILD_NUMBER}}/$BUILD_NUMBER/g" | kubectl apply -f -'
                 //     sh 'kubectl apply -f service.yml'

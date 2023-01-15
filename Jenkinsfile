@@ -1,11 +1,11 @@
-node {
+pipeline{
     agent any
     environment {
         dockerImagename = "reddyashishaleti/myimage"
         appimage = ""
     }
-    
-    stage('Build Image'){
+    stages{
+        stage('Build Image'){
             steps{
                 script {
                     dockerImage = docker.build dockerImagename
@@ -13,7 +13,7 @@ node {
                 
             }
         }
-    stage('PUSH IMAGE'){
+        stage('PUSH IMAGE'){
             environment {
                 dockerCredentilals = 'dockerCred'
             }
@@ -29,7 +29,7 @@ node {
 
             }
         }
-    stage('Remove Docker Image'){
+        stage('Remove Docker Image'){
             steps {
                 sh 'docker rmi reddyashishaleti/myimage${BUILD_NUMBER}'
                     
@@ -38,7 +38,9 @@ node {
 
         }
        
-       
+         }
+
+
     }
     
 

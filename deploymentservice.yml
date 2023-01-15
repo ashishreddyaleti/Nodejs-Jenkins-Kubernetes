@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nodeserver
-        image: reddyashishaleti/myimage:{{BUILD_NUMBER}}
+        image: reddyashishaleti/myimage:latest
         ports:
         - containerPort: 3000
         

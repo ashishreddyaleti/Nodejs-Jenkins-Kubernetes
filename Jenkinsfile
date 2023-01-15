@@ -42,5 +42,21 @@ pipeline{
 
 
     }
+    stage("SSH Into k8s Server") {
+        def remote = [:]
+        remote.name = 'K8S master'
+        remote.host = '100.0.0.2'
+        remote.user = 'vagrant'
+        remote.password = 'vagrant'
+        remote.allowAnyHosts = true
+
+        stage('Put k8s-spring-boot-deployment.yml onto k8smaster') {
+            sshPut remote: remote, from: '*.yml', into: '.'
+        }
+
+        stage('Deploy to minikube') {
+          sshCommand remote: remote, command: "kubectl apply -f deployment.yml"
+        }
+    }
 
 

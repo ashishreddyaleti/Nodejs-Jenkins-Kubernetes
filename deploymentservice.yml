@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nodeserver
-        image: reddyashishaleti/nodejs40
+        image: reddyashishaleti/myimage:{{BUILD_NUMBER}}
         ports:
         - containerPort: 3000
         

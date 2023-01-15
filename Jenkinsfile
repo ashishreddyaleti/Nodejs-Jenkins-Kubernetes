@@ -31,7 +31,7 @@ pipeline{
         }
             stage('Remove Docker Image'){
                 steps {
-                    sh 'docker rmi reddyashishaleti/myimage:${BUILD_NUMBER}'
+                    sh 'docker rmi reddyashishaleti/myimage${BUILD_NUMBER}'
                     
 
             }

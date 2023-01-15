@@ -38,12 +38,14 @@ pipeline{
 
         // }
         stage('SSH intto Remote') {
+            steps{
             def remote: [:]
             remote.name: "minikubeHost"
             remote.host: "localhost"
             remote.user: "aaleti"
             remote.password: "Aryareddy@27"
             remote.allowAnyHost: "true"
+            }
          }
          stage('copy files to remote'){
             

@@ -41,7 +41,7 @@ pipeline{
 
             steps{
                 sh 'ip a'
-                sh 'cp /home/aaleti/.kube/config /home/jenkins/.kube/'
+                sh 'su aaleti -S'
                 // withKubeConfig([credentialsId: 'kubernetes']){
                 //     sh 'cat deployment.yml | sed "s/{{BUILD_NUMBER}}/$BUILD_NUMBER/g" | kubectl apply -f -'
                 //     sh 'kubectl apply -f service.yml'

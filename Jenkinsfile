@@ -29,14 +29,24 @@ pipeline{
 
             }
         }
-            stage('Remove Docker Image'){
-                steps {
-                    sh 'docker rmi reddyashishaleti/myimage${BUILD_NUMBER}'
+        stage('Remove Docker Image'){
+            steps {
+                sh 'docker rmi reddyashishaleti/myimage${BUILD_NUMBER}'
                     
 
             }
 
         }
+        stage('Deploy to minikube') {
+
+            steps{
+                withKubeConfig([credentialsId: 'kubernetes']){
+                sh 'cat deployment.yml | sed "s/{{BUILD_NUMBER}}/$BUILD_NUMBER/g" | kubectl apply -f -'
+                sh 'kubectl apply -f service.yaml'
+                }
+            }
+        }
+
     }
 
 

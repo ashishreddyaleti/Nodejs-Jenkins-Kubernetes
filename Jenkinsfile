@@ -37,17 +37,20 @@ pipeline{
         //     }
 
         // }
-        stage('Deploy to minikube') {
-
-            steps{
-                sh 'ip a'
-                sh 'su aaleti -S'
-                // withKubeConfig([credentialsId: 'kubernetes']){
-                //     sh 'cat deployment.yml | sed "s/{{BUILD_NUMBER}}/$BUILD_NUMBER/g" | kubectl apply -f -'
-                //     sh 'kubectl apply -f service.yml'
-                // }
-            }
+        stage('SSH intto Remote') {
+            def remote: [:]
+            remote.name: "minikubeHost"
+            remote.host: "localhost"
+            remote.user: "aaleti"
+            remote.password: "Aryareddy@27"
+            remote.allowAnyHost: "true"
+         }
+         stage('copy files to remote'){
+            
+            sshPut remote: remote, from: '*yml', into: '.'
         }
+         }
+
 
     }
 

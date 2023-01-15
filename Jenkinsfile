@@ -1,11 +1,11 @@
-pipeline{
+node {
     agent any
     environment {
         dockerImagename = "reddyashishaleti/myimage"
         appimage = ""
     }
-    stages{
-        stage('Build Image'){
+    
+    stage('Build Image'){
             steps{
                 script {
                     dockerImage = docker.build dockerImagename
@@ -13,7 +13,7 @@ pipeline{
                 
             }
         }
-        stage('PUSH IMAGE'){
+    stage('PUSH IMAGE'){
             environment {
                 dockerCredentilals = 'dockerCred'
             }
@@ -29,7 +29,7 @@ pipeline{
 
             }
         }
-        stage('Remove Docker Image'){
+    stage('Remove Docker Image'){
             steps {
                 sh 'docker rmi reddyashishaleti/myimage${BUILD_NUMBER}'
                     
@@ -38,26 +38,8 @@ pipeline{
 
         }
        
-         }
-
-
+       
     }
-    stage("SSH Into k8s Server") {
-        agent any
-        def remote = [:]
-        remote.name = 'K8S master'
-        remote.host = '100.0.0.2'
-        remote.user = 'vagrant'
-        remote.password = 'vagrant'
-        remote.allowAnyHosts = true
-
-        stage('Put k8s-spring-boot-deployment.yml onto k8smaster') {
-            sshPut remote: remote, from: '*.yml', into: '.'
-        }
-
-        stage('Deploy to minikube') {
-          sshCommand remote: remote, command: "kubectl apply -f deployment.yml"
-        }
-    }
+    
 
 

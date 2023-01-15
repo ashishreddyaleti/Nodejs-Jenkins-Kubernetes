@@ -31,11 +31,8 @@ pipeline{
         }
             stage('Remove Docker Image'){
                 steps {
-                    script {
-                    sh 'docker version'
-                    sh 'docker image list'
-                    sh 'kubectl apply -f deployment.yml'
-                }
+                    sh 'docker rmi reddyashishaleti/myimage:${BUILD_NUMBER}'
+                    
 
             }
 

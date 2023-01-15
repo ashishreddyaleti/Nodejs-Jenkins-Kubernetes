@@ -1,31 +1,34 @@
 pipeline{
     agent any
-    // environment {
-    //     dockerImagename = "reddyashishaleti/myimage"
-    //     appimage = ""
-    // }
+    environment {
+        dockerImagename = "reddyashishaleti/myimage"
+        appimage = ""
+    }
     stages{
-        stage('Docker Build'){
-            steps{
-               
-                sh "docker build -t reddyashishaleti/ashish:${env.BUILD_NUMBER} ."
-            }
-        }
-        stage('Docker Push'){
-            
-            
+        stage('Build Image'){
             steps{
                 script {
-                   withCredentials([usernamePassword(credentialsId: 'Dockerhub', passwordVariable: 'passwordVariable', usernameVariable: 'usernameVariable')]){
-                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                    sh "docker push dockerImagename:${env.BUILD_NUMBER}"
-                   }
+                    dockerImage = docker.build dockerImagename
+                }
+                
+            }
+        }
+        stage('PUSH IMAGE'){
+            environment {
+                dockerCredentilals = 'dockerCred'
+            }
+            steps{
+                script {
+                    def appimage = docker.build dockerImagename + "$BUILD_NUMBER"
+                    docker.withRegistry('https://registry.hub.docker.com', 'Dockerhub') {
+                        appimage.push()
+                        appimage.push('latest')
                         
                     }
                 }
 
             }
-        
+        }
             stage('Remove Docker Image'){
                 steps {
                     script {
@@ -38,4 +41,6 @@ pipeline{
 
         }
     }
+
+
 }

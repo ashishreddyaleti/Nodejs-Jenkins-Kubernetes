@@ -45,11 +45,13 @@ pipeline{
             remote.user = 'aaleti'
             remote.password = 'Aryareddy@27'
             remote.allowAnyHost = true
+            stage('copy files to remote'){
+                 sshPut remote: remote, from: '*yml', into: '.'
         
          }
-        stage('copy files to remote'){
+       
             
-            sshPut remote: remote, from: '*yml', into: '.'
+           
         }
          }
 
